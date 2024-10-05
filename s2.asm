@@ -532,7 +532,7 @@ loc_4C4:
 +
 	move.w	#1,(Hint_flag).w
 
-	stopZ80
+	stopZ80a
 
 	tst.b	(Water_fullscreen_flag).w
 	bne.s	loc_526
@@ -569,7 +569,7 @@ Vint0_noWater:
 	move.w	#$8200|(VRAM_Plane_A_Name_Table/$400),(VDP_control_port).l	; Set scroll A PNT base to $C000
 	move.l	(Vscroll_Factor_P2).w,(Vscroll_Factor_P2_HInt).w
 
-	stopZ80
+	stopZ80a
 	dma68kToVDP Sprite_Table,VRAM_Sprite_Attribute_Table,VRAM_Sprite_Attribute_Table_Size,VRAM
 	startZ80
 
@@ -596,7 +596,7 @@ Vint_PCM:
 	andi.w	#$F,d0
 	bne.s	+
 
-	stopZ80
+	stopZ80a
 	bsr.w	ReadJoypads
 	startZ80
 +
@@ -627,7 +627,7 @@ Vint_Pause:
 	beq.w	Vint_Pause_specialStage
 ;VintSub8
 Vint_Level:
-	stopZ80
+	stopZ80a
 
 	bsr.w	ReadJoypads
 	tst.b	(Teleport_timer).w
@@ -720,7 +720,7 @@ Do_Updates:
 ; ---------------------------------------------------------------------------
 ;Vint10_specialStage
 Vint_Pause_specialStage:
-	stopZ80
+	stopZ80a
 
 	bsr.w	ReadJoypads
 	tst.b	(SS_Last_Alternate_HorizScroll_Buf).w
@@ -738,7 +738,7 @@ loc_86E:
 ; ========================================================================>>>
 ;VintSubA
 Vint_S2SS:
-	stopZ80
+	stopZ80a
 
 	bsr.w	ReadJoypads
 	bsr.w	SSSet_VScroll
@@ -898,14 +898,14 @@ SSAnim_Base_Duration:
 ; ===========================================================================
 ;VintSub1A
 Vint_CtrlDMA:
-	stopZ80
+	stopZ80a
 	jsr	(ProcessDMAQueue).l
 	startZ80
 	rts
 ; ===========================================================================
 ;VintSubC
 Vint_TitleCard:
-	stopZ80
+	stopZ80a
 
 	bsr.w	ReadJoypads
 	tst.b	(Water_fullscreen_flag).w
@@ -952,7 +952,7 @@ Vint_Fade:
 ; ===========================================================================
 ;VintSub18
 Vint_Ending:
-	stopZ80
+	stopZ80a
 
 	bsr.w	ReadJoypads
 
@@ -1002,7 +1002,7 @@ off_D3C:	offsetTable
 ; ===========================================================================
 ;VintSub16
 Vint_Menu:
-	stopZ80
+	stopZ80a
 
 	bsr.w	ReadJoypads
 
@@ -1025,7 +1025,7 @@ Vint_Menu:
 
 ;sub_E98
 Do_ControllerPal:
-	stopZ80
+	stopZ80a
 
 	bsr.w	ReadJoypads
 	tst.b	(Water_fullscreen_flag).w
@@ -1070,7 +1070,7 @@ H_Int:
 	move.l	#vdpComm($0000,VSRAM,WRITE),(VDP_control_port).l
 	move.l	(Vscroll_Factor_P2_HInt).w,(VDP_data_port).l
 
-	stopZ80
+	stopZ80a
 	dma68kToVDP Sprite_Table_2,VRAM_Sprite_Attribute_Table,VRAM_Sprite_Attribute_Table_Size,VRAM
 	startZ80
 
@@ -1249,7 +1249,7 @@ VDPSetupArray_End:
 
 ; sub_1208:
 ClearScreen:
-	stopZ80
+	stopZ80a
 
 	dmaFillVRAM 0,$0000,$40		; Fill first $40 bytes of VRAM with 0
 	dmaFillVRAM 0,VRAM_Plane_A_Name_Table,VRAM_Plane_Table_Size	; Clear Plane A pattern name table
@@ -12772,7 +12772,7 @@ EndingSequence:
 	andi.b	#$BF,d0
 	move.w	d0,(VDP_control_port).l
 
-	stopZ80
+	stopZ80a
 	dmaFillVRAM 0,VRAM_Plane_A_Name_Table,VRAM_Plane_Table_Size ; clear Plane A pattern name table
 	clr.l	(Vscroll_Factor).w
 	clr.l	(unk_F61A).w

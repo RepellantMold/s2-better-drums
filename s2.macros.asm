@@ -88,6 +88,11 @@ stopZ80 macro
 .loop:	btst	#0,(Z80_Bus_Request).l
 	bne.s	.loop ; loop until it says it's stopped
     endm
+    
+; tells the Z80 to stop, but doesn't acquire the bus
+stopZ80a macro
+	move.w	#$100,(Z80_Bus_Request).l ; stop the Z80
+    endm   
 
 ; tells the Z80 to start again
 startZ80 macro
